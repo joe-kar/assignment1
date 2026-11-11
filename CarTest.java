@@ -66,7 +66,7 @@ public class CarTest {
 
     public static void main(String[] args) {
         reportResult("Initialize test suite.", true);
-        reportResult("Check if car starts at rest.", abstractCarStartsAt0());
+        reportResult("Check if car starts at rest. ", abstractCarStartsAt0());
         reportResult("Check if gassing makes car go faster.", abstractCarGas());
         reportResult("Check if braking makes car go slower.", abstractCarGas());
         reportResult("Check if car moves.", abstractCarMove());
