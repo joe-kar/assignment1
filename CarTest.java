@@ -2,7 +2,7 @@ import java.awt.*;
 
 public class CarTest {
     private static void reportResult(String testname, boolean result) {
-        System.out.printf("%s Result: %s\n", testname, (result) ? "Success" : "Failure");
+        System.out.printf("%s Result: %s\n", testname, (result) ? "Success" : "!!! FAILURE !!!");
     }
 
     private static boolean abstractCarStartsAt0() {
@@ -64,14 +64,44 @@ public class CarTest {
         return valve.getCurrentSpeed() > gen_car.getCurrentSpeed();
     }
 
+    private static boolean gasIntervalTest() {
+        Volvo240 car1 = new Volvo240();
+        car1.gas(100);
+        return car1.getCurrentSpeed() == 0;
+    }
+
+    private static boolean gasEnginePowerTest() {
+        Volvo240 car1 = new Volvo240();
+        for (int i = 0; i < 10000; i++) {
+            car1.gas(1);
+        }
+        return car1.getCurrentSpeed() <= car1.getEnginePower();
+    }
+
+    private static boolean gasReduceSpeedTest() {
+        Volvo240 car1 = new Volvo240();
+        car1.gas(-1);
+        return car1.getCurrentSpeed() >= 0;
+    }
+
+    private static boolean brakeIncreaseSpeedTest() {
+        Volvo240 car1 = new Volvo240();
+        car1.brake(-1);
+        return car1.getCurrentSpeed() <= 0;
+    }
+
     public static void main(String[] args) {
         reportResult("Initialize test suite.", true);
-        reportResult("Check if car starts at rest. ", abstractCarStartsAt0());
+        reportResult("Check if car starts at rest.", abstractCarStartsAt0());
         reportResult("Check if gassing makes car go faster.", abstractCarGas());
         reportResult("Check if braking makes car go slower.", abstractCarGas());
         reportResult("Check if car moves.", abstractCarMove());
         reportResult("Check if car turns and moves.", abstractCarTurnMove());
         reportResult("Test the turbo on the Saab95.", testTurbo());
         reportResult("Test the trim on the Volvo240.", trimTest());
+        reportResult("Test the car does not gas outside accepted range.", gasIntervalTest());
+        reportResult("Test the car speed does not exceed engine power.", gasEnginePowerTest());
+        reportResult("Test the gas cannot reduce speed.", gasReduceSpeedTest());
+        reportResult("Test the brake cannot increase speed.", brakeIncreaseSpeedTest());
     }
 }
