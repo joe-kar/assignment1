@@ -70,12 +70,27 @@ public class CarTest {
         return car1.getCurrentSpeed() == 0;
     }
 
+    private static boolean brakeIntervalTest() {
+        Volvo240 car1 = new Volvo240();
+        Volvo240 car2 = new Volvo240();
+        car1.gas(1);
+        car1.brake(100);
+        car2.gas(1);
+        return car1.getCurrentSpeed() == car2.getCurrentSpeed();
+    }
+
     private static boolean gasEnginePowerTest() {
         Volvo240 car1 = new Volvo240();
         for (int i = 0; i < 10000; i++) {
             car1.gas(1);
         }
         return car1.getCurrentSpeed() <= car1.getEnginePower();
+    }
+
+    private static boolean brake0Test() {
+        Volvo240 car1 = new Volvo240();
+        car1.brake(1);
+        return car1.getCurrentSpeed() == 0;
     }
 
     private static boolean gasReduceSpeedTest() {
@@ -100,7 +115,9 @@ public class CarTest {
         reportResult("Test the turbo on the Saab95.", testTurbo());
         reportResult("Test the trim on the Volvo240.", trimTest());
         reportResult("Test the car does not gas outside accepted range.", gasIntervalTest());
+        reportResult("Test the car does not brake outside the accepted range.", brakeIntervalTest());
         reportResult("Test the car speed does not exceed engine power.", gasEnginePowerTest());
+        reportResult("Test the car does not brake below 0.", brake0Test());
         reportResult("Test the gas cannot reduce speed.", gasReduceSpeedTest());
         reportResult("Test the brake cannot increase speed.", brakeIncreaseSpeedTest());
     }
